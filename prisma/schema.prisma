@@ -1,0 +1,189 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  CASH_ON_SITE
+}
+
+enum ProductUnit {
+  PIECE
+  KG
+  TRAY
+  BAG
+}
+
+enum StockStatus {
+  AVAILABLE
+  LIMITED
+  OUT_OF_STOCK
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  PREPARING
+  DELIVERED
+  CANCELLED
+}
+
+model User {
+  id                     String        @id @default(cuid())
+  email                  String        @unique
+  name                   String?
+  phoneNumber            String
+  address                String
+  preferredPaymentMethod PaymentMethod @default(CASH_ON_DELIVERY)
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+}
+
+model Admin {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  sessions     AdminSession[]
+}
+
+model AdminSession {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  adminId   String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([expiresAt])
+}
+
+model ProductCategory {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  imageUrl    String?
+  sortOrder   Int       @default(0)
+  showOnHome  Boolean   @default(true)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+  translations CategoryTranslation[]
+
+  @@index([isActive, showOnHome, sortOrder])
+}
+
+model CategoryTranslation {
+  id          String          @id @default(cuid())
+  categoryId  String
+  locale      String
+  name        String
+  description String?
+  category    ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+  @@index([locale])
+}
+
+model Product {
+  id          String          @id @default(cuid())
+  categoryId  String
+  name        String
+  slug        String          @unique
+  description String
+  imageUrl    String?
+  price       Decimal         @db.Decimal(10, 2)
+  unit        ProductUnit     @default(PIECE)
+  stockStatus StockStatus     @default(AVAILABLE)
+  isOrganic   Boolean         @default(false)
+  isFreeRange Boolean         @default(false)
+  isFeatured  Boolean         @default(false)
+  featuredSortOrder Int       @default(0)
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  category    ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  orderItems  OrderItem[]
+  translations ProductTranslation[]
+
+  @@index([categoryId])
+  @@index([isActive, stockStatus])
+  @@index([isOrganic])
+  @@index([isFeatured, featuredSortOrder])
+}
+
+model ProductTranslation {
+  id          String  @id @default(cuid())
+  productId   String
+  locale      String
+  name        String
+  description String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locale])
+  @@index([locale])
+}
+
+model HomeContent {
+  id                 String   @id @default("home")
+  heroBadge          String
+  heroTitle          String
+  heroHighlight      String
+  heroIntro          String
+  heroImageUrl       String?
+  heroVisualTitle    String
+  heroVisualText     String
+  categoriesEyebrow  String
+  categoriesTitle    String
+  categoriesIntro    String
+  productsEyebrow    String
+  productsTitle      String
+  productsIntro      String
+  paymentTitle       String
+  paymentText        String
+  paymentCta         String
+  updatedAt          DateTime @updatedAt
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  customerName  String
+  customerPhone String
+  customerEmail String?
+  address       String
+  notes         String?
+  paymentMethod PaymentMethod @default(CASH_ON_DELIVERY)
+  status        OrderStatus   @default(NEW)
+  subtotal      Decimal       @db.Decimal(10, 2)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  items         OrderItem[]
+
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  name      String
+  unit      ProductUnit
+  quantity  Int
+  unitPrice Decimal @db.Decimal(10, 2)
+  lineTotal Decimal @db.Decimal(10, 2)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([productId])
+}

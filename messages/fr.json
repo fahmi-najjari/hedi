@@ -1,11 +1,308 @@
 {
+  "Navbar": {
+    "brand": "Hedi Mchaab Farm",
+    "tagline": "Ferme locale",
+    "home": "Accueil",
+    "shop": "Boutique",
+    "cart": "Panier",
+    "language": "العربية",
+    "searchPlaceholder": "Rechercher des produits frais...",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
   "HomePage": {
-    "title": "Bienvenue sur Chicks",
-    "intro": "Cette page utilise Next.js 16 et next-intl.",
-    "switchLocale": "العربية"
+    "hero": {
+      "badge": "Frais de la ferme à votre table",
+      "title": "Poulet frais, oeufs et aliments",
+      "highlight": "directement de la ferme.",
+      "intro": "Hedi Mchaab Farm fournit du poulet entier, des morceaux de viande, des oeufs, des poussins et des aliments pour volailles avec un service local simple et fiable.",
+      "shop": "Voir la boutique",
+      "call": "Commander par téléphone",
+      "visualTitle": "Poulet local",
+      "visualText": "Préparé sur commande selon disponibilité.",
+      "eggsCard": "Oeufs frais"
+    },
+    "features": {
+      "fresh": {
+        "title": "Produits frais",
+        "text": "Poulet, oeufs et produits de ferme préparés pour les commandes locales."
+      },
+      "quality": {
+        "title": "Qualité contrôlée",
+        "text": "Nous sélectionnons les produits avec soin pour les familles, restaurants et revendeurs."
+      },
+      "delivery": {
+        "title": "Livraison locale",
+        "text": "Paiement en espèces à la livraison ou achat direct sur place à la ferme."
+      }
+    },
+    "categories": {
+      "eyebrow": "Catégories",
+      "title": "Tout pour vos besoins en volaille",
+      "intro": "Commandez les produits les plus demandés: poulet fermier, morceaux, oeufs, poussins et aliments.",
+      "items": {
+        "whole": {
+          "title": "Poulet entier",
+          "text": "Poulet fermier, plein air et biologique pour les repas familiaux."
+        },
+        "cuts": {
+          "title": "Morceaux de poulet",
+          "text": "Blanc, ailes, cuisses et assortiments pratiques selon disponibilité."
+        },
+        "eggs": {
+          "title": "Oeufs",
+          "text": "Oeufs frais de ferme, plein air, biologiques et plateaux."
+        },
+        "chicks": {
+          "title": "Poussins",
+          "text": "Poussins de chair et pondeuses pour démarrer ou renforcer votre élevage."
+        },
+        "feed": {
+          "title": "Aliments",
+          "text": "Aliments starter, croissance, pondeuses et poulets de chair."
+        }
+      }
+    },
+    "products": {
+      "eyebrow": "Produits populaires",
+      "title": "Frais de la ferme",
+      "intro": "Une sélection claire pour commencer. Les prix et stocks seront ajoutés dans la boutique.",
+      "viewAll": "Voir tous les produits",
+      "badges": {
+        "fresh": "Frais",
+        "premium": "Premium",
+        "organic": "Biologique",
+        "lean": "Viande maigre",
+        "family": "Familial",
+        "grill": "Grillade",
+        "daily": "Quotidien",
+        "bulk": "Plateau",
+        "starter": "Démarrage",
+        "layers": "Pondeuses",
+        "grower": "Croissance",
+        "broiler": "Chair"
+      },
+      "items": {
+        "farmChicken": {
+          "name": "Poulet fermier",
+          "text": "Poulet entier frais pour la maison, les restaurants et les commandes familiales."
+        },
+        "freeRangeChicken": {
+          "name": "Poulet plein air",
+          "text": "Option plus naturelle pour les clients qui veulent un goût de ferme marqué."
+        },
+        "organicChicken": {
+          "name": "Poulet biologique",
+          "text": "Sélection premium pour les commandes qui demandent une qualité supérieure."
+        },
+        "chickenBreast": {
+          "name": "Blanc de poulet",
+          "text": "Morceau tendre et pratique pour les plats rapides, grillades et préparations propres."
+        },
+        "legsThighs": {
+          "name": "Cuisses & hauts de cuisse",
+          "text": "Morceaux savoureux pour cuisson traditionnelle, grillades et plats familiaux."
+        },
+        "wings": {
+          "name": "Ailes de poulet",
+          "text": "Format apprécié pour les grillades, les snacks et les commandes de restaurant."
+        },
+        "mixedPieces": {
+          "name": "Assortiment de morceaux",
+          "text": "Mélange pratique pour les familles qui veulent plusieurs morceaux dans une seule commande."
+        },
+        "farmFreshEggs": {
+          "name": "Oeufs frais de ferme",
+          "text": "Oeufs du jour selon la production disponible à la ferme."
+        },
+        "freeRangeEggs": {
+          "name": "Oeufs plein air",
+          "text": "Option plus naturelle pour les clients qui recherchent une qualité supérieure."
+        },
+        "organicEggs": {
+          "name": "Oeufs biologiques",
+          "text": "Sélection premium selon disponibilité et production du moment."
+        },
+        "eggTray": {
+          "name": "Plateau d'oeufs",
+          "text": "Format pratique pour familles nombreuses, restaurants et commandes régulières."
+        },
+        "broilerChicks": {
+          "name": "Poussins de chair",
+          "text": "Poussins destinés à l'élevage de poulets de chair."
+        },
+        "layerChicks": {
+          "name": "Poussins pondeuses",
+          "text": "Poussins destinés à l'élevage de poules pondeuses."
+        },
+        "starterFeed": {
+          "name": "Aliment starter",
+          "text": "Aliment adapté aux premiers jours de croissance des poussins."
+        },
+        "growerFeed": {
+          "name": "Aliment croissance",
+          "text": "Formule pour accompagner les volailles après la phase de démarrage."
+        },
+        "layerFeed": {
+          "name": "Aliment pondeuses",
+          "text": "Aliment pensé pour soutenir la ponte et l'équilibre des poules."
+        },
+        "broilerFeed": {
+          "name": "Aliment poulets de chair",
+          "text": "Formule dédiée à la croissance des poulets de chair."
+        }
+      }
+    },
+    "payment": {
+      "title": "Paiement simple aujourd'hui, paiement en ligne plus tard",
+      "text": "Pour le lancement, les commandes sont payées en espèces à la livraison ou directement sur place. Les paiements en ligne pourront être ajoutés lorsque la boutique commencera à générer des ventes régulières.",
+      "cta": "Préparer une commande"
+    }
+  },
+  "ShopPage": {
+    "eyebrow": "Boutique",
+    "title": "Produits de la ferme",
+    "intro": "Choisissez entre poulet fermier, options biologiques, oeufs, poussins et aliments pour volailles.",
+    "filters": {
+      "all": "Tous",
+      "organic": "Biologique"
+    },
+    "categories": {
+      "whole": "Poulet entier",
+      "cuts": "Morceaux",
+      "eggs": "Oeufs",
+      "chicks": "Poussins",
+      "feed": "Aliments"
+    },
+    "products": {
+      "badges": {
+        "fresh": "Frais",
+        "premium": "Premium",
+        "organic": "Biologique",
+        "lean": "Viande maigre",
+        "family": "Familial",
+        "grill": "Grillade",
+        "daily": "Quotidien",
+        "bulk": "Plateau",
+        "starter": "Démarrage",
+        "layers": "Pondeuses",
+        "grower": "Croissance",
+        "broiler": "Chair"
+      },
+      "items": {
+        "farmChicken": {
+          "name": "Poulet fermier",
+          "text": "Poulet entier frais pour la maison, les restaurants et les commandes familiales."
+        },
+        "freeRangeChicken": {
+          "name": "Poulet plein air",
+          "text": "Option plus naturelle pour les clients qui veulent un goût de ferme marqué."
+        },
+        "organicChicken": {
+          "name": "Poulet biologique",
+          "text": "Sélection premium pour les commandes qui demandent une qualité supérieure."
+        },
+        "chickenBreast": {
+          "name": "Blanc de poulet",
+          "text": "Morceau tendre et pratique pour les plats rapides, grillades et préparations propres."
+        },
+        "legsThighs": {
+          "name": "Cuisses & hauts de cuisse",
+          "text": "Morceaux savoureux pour cuisson traditionnelle, grillades et plats familiaux."
+        },
+        "wings": {
+          "name": "Ailes de poulet",
+          "text": "Format apprécié pour les grillades, les snacks et les commandes de restaurant."
+        },
+        "mixedPieces": {
+          "name": "Assortiment de morceaux",
+          "text": "Mélange pratique pour les familles qui veulent plusieurs morceaux dans une seule commande."
+        },
+        "farmFreshEggs": {
+          "name": "Oeufs frais de ferme",
+          "text": "Oeufs du jour selon la production disponible à la ferme."
+        },
+        "freeRangeEggs": {
+          "name": "Oeufs plein air",
+          "text": "Option plus naturelle pour les clients qui recherchent une qualité supérieure."
+        },
+        "organicEggs": {
+          "name": "Oeufs biologiques",
+          "text": "Sélection premium selon disponibilité et production du moment."
+        },
+        "eggTray": {
+          "name": "Plateau d'oeufs",
+          "text": "Format pratique pour familles nombreuses, restaurants et commandes régulières."
+        },
+        "broilerChicks": {
+          "name": "Poussins de chair",
+          "text": "Poussins destinés à l'élevage de poulets de chair."
+        },
+        "layerChicks": {
+          "name": "Poussins pondeuses",
+          "text": "Poussins destinés à l'élevage de poules pondeuses."
+        },
+        "starterFeed": {
+          "name": "Aliment starter",
+          "text": "Aliment adapté aux premiers jours de croissance des poussins."
+        },
+        "growerFeed": {
+          "name": "Aliment croissance",
+          "text": "Formule pour accompagner les volailles après la phase de démarrage."
+        },
+        "layerFeed": {
+          "name": "Aliment pondeuses",
+          "text": "Aliment pensé pour soutenir la ponte et l'équilibre des poules."
+        },
+        "broilerFeed": {
+          "name": "Aliment poulets de chair",
+          "text": "Formule dédiée à la croissance des poulets de chair."
+        }
+      }
+    }
+  },
+  "CartPage": {
+    "eyebrow": "Panier",
+    "title": "Votre panier",
+    "empty": "Votre panier est vide pour le moment."
+  },
+  "Footer": {
+    "brand": "Hedi Mchaab Farm",
+    "tagline": "Ferme locale",
+    "description": "Poulet, oeufs, poussins et aliments de volaille prepares avec soin pour les familles, restaurants et commandes locales.",
+    "shop": {
+      "title": "Boutique",
+      "links": {
+        "whole": "Poulet entier",
+        "cuts": "Morceaux de poulet",
+        "eggs": "Oeufs frais",
+        "chicks": "Poussins",
+        "feed": "Aliments"
+      }
+    },
+    "info": {
+      "title": "Informations",
+      "links": {
+        "home": "Accueil",
+        "shop": "Tous les produits",
+        "cart": "Panier"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "Ferme Hedi Mchaab, service local",
+      "phone": "+216 98 450 827",
+      "email": "hedimchaab@email.com"
+    },
+    "bottom": {
+      "order": "Preparer une commande",
+      "cart": "Voir le panier",
+      "admin": "Admin"
+    },
+    "copyright": "© {year} Hedi Mchaab Farm. Tous droits reserves."
   },
   "Metadata": {
-    "title": "Chicks",
-    "description": "Une application Next.js localisée."
+    "title": "Hedi Mchaab Farm",
+    "description": "Ferme locale de volailles, oeufs, poussins et aliments pour volailles."
   }
 }

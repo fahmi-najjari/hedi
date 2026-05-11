@@ -43,30 +43,32 @@ export default async function AdminPage({ searchParams }: Props) {
     products,
     orders,
     homeContent,
-  ] =
-    await Promise.all([
-      searchParams,
-      getPrisma().productCategory.findMany({
-        include: { translations: true },
-        orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
-      }),
-      getPrisma().productCategory.findMany({
-        where: { isActive: true },
-        include: { translations: true },
-        orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
-      }),
-      getPrisma().product.findMany({
-        include: { category: { include: { translations: true } }, translations: true },
-        orderBy: [{ createdAt: "desc" }],
-        take: 50,
-      }),
-      getPrisma().order.findMany({
-        include: { items: true },
-        orderBy: { createdAt: "desc" },
-        take: 20,
-      }),
-      getPrisma().homeContent.findUnique({ where: { id: "home" } }),
-    ]);
+  ] = await Promise.all([
+    searchParams,
+    getPrisma().productCategory.findMany({
+      include: { translations: true },
+      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+    }),
+    getPrisma().productCategory.findMany({
+      where: { isActive: true },
+      include: { translations: true },
+      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+    }),
+    getPrisma().product.findMany({
+      include: {
+        category: { include: { translations: true } },
+        translations: true,
+      },
+      orderBy: [{ createdAt: "desc" }],
+      take: 50,
+    }),
+    getPrisma().order.findMany({
+      include: { items: true },
+      orderBy: { createdAt: "desc" },
+      take: 20,
+    }),
+    getPrisma().homeContent.findUnique({ where: { id: "home" } }),
+  ]);
   const homeValues = homeContent ?? defaultHomeContent;
 
   return (
@@ -308,57 +310,57 @@ export default async function AdminPage({ searchParams }: Props) {
               const ar = getLocalizedFields(item, "ar");
 
               return (
-              <form
-                key={item.id}
-                action={updateCategory}
-                className="grid gap-2 rounded-md border border-zinc-100 bg-zinc-50 p-2 md:grid-cols-[1fr_1fr_1fr_80px_auto_auto_auto]"
-              >
-                <input type="hidden" name="id" value={item.id} />
-                <input
-                  name="nameFr"
-                  defaultValue={fr.name}
-                  className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
-                  required
-                />
-                <input
-                  name="nameAr"
-                  dir="rtl"
-                  defaultValue={ar.name}
-                  className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
-                />
-                <input
-                  name="imageUrl"
-                  type="url"
-                  defaultValue={item.imageUrl ?? ""}
-                  placeholder="Image URL"
-                  className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
-                />
-                <input
-                  name="sortOrder"
-                  type="number"
-                  defaultValue={item.sortOrder}
-                  className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
-                />
-                <label className="flex items-center gap-1.5 text-xs text-zinc-700">
+                <form
+                  key={item.id}
+                  action={updateCategory}
+                  className="grid gap-2 rounded-md border border-zinc-100 bg-zinc-50 p-2 md:grid-cols-[1fr_1fr_1fr_80px_auto_auto_auto]"
+                >
+                  <input type="hidden" name="id" value={item.id} />
                   <input
-                    name="showOnHome"
-                    type="checkbox"
-                    defaultChecked={item.showOnHome}
+                    name="nameFr"
+                    defaultValue={fr.name}
+                    className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
+                    required
                   />
-                  Accueil
-                </label>
-                <label className="flex items-center gap-1.5 text-xs text-zinc-700">
                   <input
-                    name="isActive"
-                    type="checkbox"
-                    defaultChecked={item.isActive}
+                    name="nameAr"
+                    dir="rtl"
+                    defaultValue={ar.name}
+                    className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
                   />
-                  Visible
-                </label>
-                <button className="h-8 rounded-md border border-zinc-300 bg-white px-3 text-xs font-medium text-zinc-800 transition hover:bg-zinc-100">
-                  Sauver
-                </button>
-              </form>
+                  <input
+                    name="imageUrl"
+                    type="url"
+                    defaultValue={item.imageUrl ?? ""}
+                    placeholder="Image URL"
+                    className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
+                  />
+                  <input
+                    name="sortOrder"
+                    type="number"
+                    defaultValue={item.sortOrder}
+                    className="h-8 rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950"
+                  />
+                  <label className="flex items-center gap-1.5 text-xs text-zinc-700">
+                    <input
+                      name="showOnHome"
+                      type="checkbox"
+                      defaultChecked={item.showOnHome}
+                    />
+                    Accueil
+                  </label>
+                  <label className="flex items-center gap-1.5 text-xs text-zinc-700">
+                    <input
+                      name="isActive"
+                      type="checkbox"
+                      defaultChecked={item.isActive}
+                    />
+                    Visible
+                  </label>
+                  <button className="h-8 rounded-md border border-zinc-300 bg-white px-3 text-xs font-medium text-zinc-800 transition hover:bg-zinc-100">
+                    Sauver
+                  </button>
+                </form>
               );
             })}
           </div>
@@ -552,18 +554,18 @@ export default async function AdminPage({ searchParams }: Props) {
               const productText = getLocalizedFields(product, "fr");
 
               return (
-              <label
-                key={product.id}
-                className="flex items-center gap-2 rounded-md border border-zinc-100 bg-zinc-50 p-2 text-xs text-zinc-700"
-              >
-                <input
-                  name="featuredProductIds"
-                  type="checkbox"
-                  value={product.id}
-                  defaultChecked={product.isFeatured}
-                />
-                <span className="truncate">{productText.name}</span>
-              </label>
+                <label
+                  key={product.id}
+                  className="flex items-center gap-2 rounded-md border border-zinc-100 bg-zinc-50 p-2 text-xs text-zinc-700"
+                >
+                  <input
+                    name="featuredProductIds"
+                    type="checkbox"
+                    value={product.id}
+                    defaultChecked={product.isFeatured}
+                  />
+                  <span className="truncate">{productText.name}</span>
+                </label>
               );
             })}
             <button className="h-9 rounded-md bg-zinc-950 px-4 text-xs font-medium text-white transition hover:bg-zinc-800 sm:col-span-2 lg:col-span-4">
@@ -601,7 +603,7 @@ export default async function AdminPage({ searchParams }: Props) {
             Produits recents
           </h2>
           <div className="mt-3 overflow-x-auto">
-            <table className="w-full min-w-[760px] text-left text-xs">
+            <table className="w-full min-w-190 text-left text-xs">
               <thead className="border-b border-zinc-200 text-zinc-500">
                 <tr>
                   <th className="py-2">Produit</th>
@@ -615,39 +617,42 @@ export default async function AdminPage({ searchParams }: Props) {
               <tbody className="divide-y divide-zinc-100">
                 {products.map((product) => {
                   const productText = getLocalizedFields(product, "fr");
-                  const categoryText = getLocalizedFields(product.category, "fr");
+                  const categoryText = getLocalizedFields(
+                    product.category,
+                    "fr",
+                  );
 
                   return (
-                  <tr key={product.id}>
-                    <td className="py-2 font-medium text-zinc-950">
-                      {productText.name}
-                    </td>
-                    <td className="py-2 text-zinc-600">
-                      {categoryText.name}
-                    </td>
-                    <td className="py-2 text-zinc-600">
-                      {formatMoney(product.price)} / {product.unit}
-                    </td>
-                    <td className="py-2 text-zinc-600">
-                      {product.stockStatus}
-                    </td>
-                    <td className="py-2 text-zinc-600">
-                      {product.isActive ? "Oui" : "Non"}
-                    </td>
-                    <td className="py-2 text-right">
-                      <form action={toggleProductActive}>
-                        <input type="hidden" name="id" value={product.id} />
-                        <input
-                          type="hidden"
-                          name="isActive"
-                          value={String(product.isActive)}
-                        />
-                        <button className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-medium text-zinc-700 hover:bg-zinc-100">
-                          {product.isActive ? "Masquer" : "Afficher"}
-                        </button>
-                      </form>
-                    </td>
-                  </tr>
+                    <tr key={product.id}>
+                      <td className="py-2 font-medium text-zinc-950">
+                        {productText.name}
+                      </td>
+                      <td className="py-2 text-zinc-600">
+                        {categoryText.name}
+                      </td>
+                      <td className="py-2 text-zinc-600">
+                        {formatMoney(product.price)} / {product.unit}
+                      </td>
+                      <td className="py-2 text-zinc-600">
+                        {product.stockStatus}
+                      </td>
+                      <td className="py-2 text-zinc-600">
+                        {product.isActive ? "Oui" : "Non"}
+                      </td>
+                      <td className="py-2 text-right">
+                        <form action={toggleProductActive}>
+                          <input type="hidden" name="id" value={product.id} />
+                          <input
+                            type="hidden"
+                            name="isActive"
+                            value={String(product.isActive)}
+                          />
+                          <button className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-medium text-zinc-700 hover:bg-zinc-100">
+                            {product.isActive ? "Masquer" : "Afficher"}
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
                   );
                 })}
               </tbody>

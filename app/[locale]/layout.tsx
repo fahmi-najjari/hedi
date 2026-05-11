@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -59,11 +60,24 @@ export default async function LocaleLayout({ children, params }: Props) {
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
-          <Navbar />
+          <Suspense fallback={<NavbarFallback />}>
+            <Navbar />
+          </Suspense>
           {children}
           <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
+  );
+}
+
+function NavbarFallback() {
+  return (
+    <header className="site-navbar sticky top-0 z-50 w-full backdrop-blur-xl">
+      <div className="mx-auto flex h-20 max-w-6xl items-center gap-4 px-4 md:px-6">
+        <div className="h-11 w-44 rounded-lg bg-secondary/60" />
+        <div className="ms-auto h-10 w-24 rounded-full bg-primary/20" />
+      </div>
+    </header>
   );
 }

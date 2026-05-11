@@ -1,0 +1,11 @@
+{
+  "HomePage": {
+    "title": "Bienvenue sur Chicks",
+    "intro": "Cette page utilise Next.js 16 et next-intl.",
+    "switchLocale": "العربية"
+  },
+  "Metadata": {
+    "title": "Chicks",
+    "description": "Une application Next.js localisée."
+  }
+}

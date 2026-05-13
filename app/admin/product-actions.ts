@@ -316,7 +316,7 @@ export async function seedStarterCatalog() {
 
   revalidatePath("/[locale]/shop", "page");
   revalidatePath("/[locale]", "page");
-  redirect("/admin?seeded=1");
+  redirect("/admin/products?seeded=1");
 }
 
 export async function createProduct(formData: FormData) {
@@ -337,7 +337,7 @@ export async function createProduct(formData: FormData) {
   );
 
   if (!categoryId || !nameFr || !descriptionFr || !price || Number(price) <= 0) {
-    redirect("/admin?error=product");
+    redirect("/admin/products?error=product");
   }
 
   const product = await getPrisma().product.create({
@@ -379,17 +379,18 @@ export async function createProduct(formData: FormData) {
 
   revalidatePath("/[locale]/shop", "page");
   revalidatePath("/[locale]", "page");
-  redirect("/admin?created=1");
+  redirect("/admin/products?created=1");
 }
 
 export async function toggleProductActive(formData: FormData) {
   await requireAdmin();
 
   const id = getString(formData, "id");
-  const isActive = getString(formData, "isActive") === "true";
+  const isActiveValue = getString(formData, "currentIsActive") || getString(formData, "isActive");
+  const isActive = isActiveValue === "true" || isActiveValue === "on";
 
   if (!id) {
-    redirect("/admin");
+    redirect("/admin/products");
   }
 
   await getPrisma().product.update({
@@ -399,5 +400,89 @@ export async function toggleProductActive(formData: FormData) {
 
   revalidatePath("/[locale]/shop", "page");
   revalidatePath("/[locale]", "page");
-  redirect("/admin");
+  redirect("/admin/products");
+}
+
+export async function updateProduct(formData: FormData) {
+  await requireAdmin();
+
+  const id = getString(formData, "id");
+  const categoryId = getString(formData, "categoryId");
+  const nameFr = getString(formData, "nameFr");
+  const nameAr = getString(formData, "nameAr");
+  const descriptionFr = getString(formData, "descriptionFr");
+  const descriptionAr = getString(formData, "descriptionAr");
+  const price = getString(formData, "price");
+  const imageUrl = getString(formData, "imageUrl") || null;
+  const unit = getEnumValue(ProductUnit, getString(formData, "unit"), ProductUnit.PIECE);
+  const stockStatus = getEnumValue(
+    StockStatus,
+    getString(formData, "stockStatus"),
+    StockStatus.AVAILABLE,
+  );
+
+  if (!id || !categoryId || !nameFr || !descriptionFr || !price || Number(price) <= 0) {
+    redirect("/admin/products?error=product");
+  }
+
+  const prisma = getPrisma();
+
+  await prisma.product.update({
+    where: { id },
+    data: {
+      categoryId,
+      name: nameFr,
+      description: descriptionFr,
+      imageUrl,
+      price,
+      unit,
+      stockStatus,
+      isOrganic: formData.get("isOrganic") === "on",
+      isFreeRange: formData.get("isFreeRange") === "on",
+      isActive: formData.get("isActive") === "on",
+    },
+  });
+
+  await Promise.all([
+    prisma.productTranslation.upsert({
+      where: {
+        productId_locale: {
+          productId: id,
+          locale: "fr",
+        },
+      },
+      create: {
+        productId: id,
+        locale: "fr",
+        name: nameFr,
+        description: descriptionFr,
+      },
+      update: {
+        name: nameFr,
+        description: descriptionFr,
+      },
+    }),
+    prisma.productTranslation.upsert({
+      where: {
+        productId_locale: {
+          productId: id,
+          locale: "ar",
+        },
+      },
+      create: {
+        productId: id,
+        locale: "ar",
+        name: nameAr || nameFr,
+        description: descriptionAr || descriptionFr,
+      },
+      update: {
+        name: nameAr || nameFr,
+        description: descriptionAr || descriptionFr,
+      },
+    }),
+  ]);
+
+  revalidatePath("/[locale]/shop", "page");
+  revalidatePath("/[locale]", "page");
+  redirect("/admin/products?product=updated");
 }

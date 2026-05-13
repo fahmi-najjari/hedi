@@ -45,7 +45,7 @@ export async function createCategory(formData: FormData) {
   const sortOrder = getNumber(formData, "sortOrder");
 
   if (!name) {
-    redirect("/admin?error=category");
+    redirect("/admin/categories?error=category");
   }
 
   const category = await getPrisma().productCategory.create({
@@ -82,7 +82,7 @@ export async function createCategory(formData: FormData) {
   ]);
 
   revalidatePublicPages();
-  redirect("/admin?category=created");
+  redirect("/admin/categories?category=created");
 }
 
 export async function updateCategory(formData: FormData) {
@@ -95,7 +95,7 @@ export async function updateCategory(formData: FormData) {
   const descriptionAr = getOptionalString(formData, "descriptionAr");
 
   if (!id || !name) {
-    redirect("/admin?error=category");
+    redirect("/admin/categories?error=category");
   }
 
   await getPrisma().productCategory.update({
@@ -150,7 +150,7 @@ export async function updateCategory(formData: FormData) {
   ]);
 
   revalidatePublicPages();
-  redirect("/admin?category=updated");
+  redirect("/admin/categories?category=updated");
 }
 
 export async function updateHomeContent(formData: FormData) {
@@ -230,7 +230,7 @@ export async function updateHomeContent(formData: FormData) {
   });
 
   revalidatePublicPages();
-  redirect("/admin?home=updated");
+  redirect("/admin/home?home=updated");
 }
 
 export async function updateFeaturedProducts(formData: FormData) {
@@ -259,5 +259,5 @@ export async function updateFeaturedProducts(formData: FormData) {
   );
 
   revalidatePublicPages();
-  redirect("/admin?featured=updated");
+  redirect("/admin/home?featured=updated");
 }

@@ -28,11 +28,15 @@ export type AggregateProduct = {
 
 export type ProductAvgAggregateOutputType = {
   price: runtime.Decimal | null
+  stockQuantity: runtime.Decimal | null
+  lowStockThreshold: runtime.Decimal | null
   featuredSortOrder: number | null
 }
 
 export type ProductSumAggregateOutputType = {
   price: runtime.Decimal | null
+  stockQuantity: runtime.Decimal | null
+  lowStockThreshold: runtime.Decimal | null
   featuredSortOrder: number | null
 }
 
@@ -45,6 +49,8 @@ export type ProductMinAggregateOutputType = {
   imageUrl: string | null
   price: runtime.Decimal | null
   unit: $Enums.ProductUnit | null
+  stockQuantity: runtime.Decimal | null
+  lowStockThreshold: runtime.Decimal | null
   stockStatus: $Enums.StockStatus | null
   isOrganic: boolean | null
   isFreeRange: boolean | null
@@ -64,6 +70,8 @@ export type ProductMaxAggregateOutputType = {
   imageUrl: string | null
   price: runtime.Decimal | null
   unit: $Enums.ProductUnit | null
+  stockQuantity: runtime.Decimal | null
+  lowStockThreshold: runtime.Decimal | null
   stockStatus: $Enums.StockStatus | null
   isOrganic: boolean | null
   isFreeRange: boolean | null
@@ -83,6 +91,8 @@ export type ProductCountAggregateOutputType = {
   imageUrl: number
   price: number
   unit: number
+  stockQuantity: number
+  lowStockThreshold: number
   stockStatus: number
   isOrganic: number
   isFreeRange: number
@@ -97,11 +107,15 @@ export type ProductCountAggregateOutputType = {
 
 export type ProductAvgAggregateInputType = {
   price?: true
+  stockQuantity?: true
+  lowStockThreshold?: true
   featuredSortOrder?: true
 }
 
 export type ProductSumAggregateInputType = {
   price?: true
+  stockQuantity?: true
+  lowStockThreshold?: true
   featuredSortOrder?: true
 }
 
@@ -114,6 +128,8 @@ export type ProductMinAggregateInputType = {
   imageUrl?: true
   price?: true
   unit?: true
+  stockQuantity?: true
+  lowStockThreshold?: true
   stockStatus?: true
   isOrganic?: true
   isFreeRange?: true
@@ -133,6 +149,8 @@ export type ProductMaxAggregateInputType = {
   imageUrl?: true
   price?: true
   unit?: true
+  stockQuantity?: true
+  lowStockThreshold?: true
   stockStatus?: true
   isOrganic?: true
   isFreeRange?: true
@@ -152,6 +170,8 @@ export type ProductCountAggregateInputType = {
   imageUrl?: true
   price?: true
   unit?: true
+  stockQuantity?: true
+  lowStockThreshold?: true
   stockStatus?: true
   isOrganic?: true
   isFreeRange?: true
@@ -258,6 +278,8 @@ export type ProductGroupByOutputType = {
   imageUrl: string | null
   price: runtime.Decimal
   unit: $Enums.ProductUnit
+  stockQuantity: runtime.Decimal
+  lowStockThreshold: runtime.Decimal
   stockStatus: $Enums.StockStatus
   isOrganic: boolean
   isFreeRange: boolean
@@ -300,6 +322,8 @@ export type ProductWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFilter<"Product"> | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFilter<"Product"> | $Enums.StockStatus
   isOrganic?: Prisma.BoolFilter<"Product"> | boolean
   isFreeRange?: Prisma.BoolFilter<"Product"> | boolean
@@ -322,6 +346,8 @@ export type ProductOrderByWithRelationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  lowStockThreshold?: Prisma.SortOrder
   stockStatus?: Prisma.SortOrder
   isOrganic?: Prisma.SortOrder
   isFreeRange?: Prisma.SortOrder
@@ -347,6 +373,8 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFilter<"Product"> | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFilter<"Product"> | $Enums.StockStatus
   isOrganic?: Prisma.BoolFilter<"Product"> | boolean
   isFreeRange?: Prisma.BoolFilter<"Product"> | boolean
@@ -369,6 +397,8 @@ export type ProductOrderByWithAggregationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  lowStockThreshold?: Prisma.SortOrder
   stockStatus?: Prisma.SortOrder
   isOrganic?: Prisma.SortOrder
   isFreeRange?: Prisma.SortOrder
@@ -396,6 +426,8 @@ export type ProductScalarWhereWithAggregatesInput = {
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   price?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitWithAggregatesFilter<"Product"> | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusWithAggregatesFilter<"Product"> | $Enums.StockStatus
   isOrganic?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   isFreeRange?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
@@ -414,6 +446,8 @@ export type ProductCreateInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -436,6 +470,8 @@ export type ProductUncheckedCreateInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -456,6 +492,8 @@ export type ProductUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -478,6 +516,8 @@ export type ProductUncheckedUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -499,6 +539,8 @@ export type ProductCreateManyInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -517,6 +559,8 @@ export type ProductUpdateManyMutationInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -536,6 +580,8 @@ export type ProductUncheckedUpdateManyInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -565,6 +611,8 @@ export type ProductCountOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   price?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  lowStockThreshold?: Prisma.SortOrder
   stockStatus?: Prisma.SortOrder
   isOrganic?: Prisma.SortOrder
   isFreeRange?: Prisma.SortOrder
@@ -577,6 +625,8 @@ export type ProductCountOrderByAggregateInput = {
 
 export type ProductAvgOrderByAggregateInput = {
   price?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  lowStockThreshold?: Prisma.SortOrder
   featuredSortOrder?: Prisma.SortOrder
 }
 
@@ -589,6 +639,8 @@ export type ProductMaxOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   price?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  lowStockThreshold?: Prisma.SortOrder
   stockStatus?: Prisma.SortOrder
   isOrganic?: Prisma.SortOrder
   isFreeRange?: Prisma.SortOrder
@@ -608,6 +660,8 @@ export type ProductMinOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   price?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  lowStockThreshold?: Prisma.SortOrder
   stockStatus?: Prisma.SortOrder
   isOrganic?: Prisma.SortOrder
   isFreeRange?: Prisma.SortOrder
@@ -620,6 +674,8 @@ export type ProductMinOrderByAggregateInput = {
 
 export type ProductSumOrderByAggregateInput = {
   price?: Prisma.SortOrder
+  stockQuantity?: Prisma.SortOrder
+  lowStockThreshold?: Prisma.SortOrder
   featuredSortOrder?: Prisma.SortOrder
 }
 
@@ -722,6 +778,8 @@ export type ProductCreateWithoutCategoryInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -742,6 +800,8 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -792,6 +852,8 @@ export type ProductScalarWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFilter<"Product"> | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFilter<"Product"> | $Enums.StockStatus
   isOrganic?: Prisma.BoolFilter<"Product"> | boolean
   isFreeRange?: Prisma.BoolFilter<"Product"> | boolean
@@ -810,6 +872,8 @@ export type ProductCreateWithoutTranslationsInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -831,6 +895,8 @@ export type ProductUncheckedCreateWithoutTranslationsInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -866,6 +932,8 @@ export type ProductUpdateWithoutTranslationsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -887,6 +955,8 @@ export type ProductUncheckedUpdateWithoutTranslationsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -906,6 +976,8 @@ export type ProductCreateWithoutOrderItemsInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -927,6 +999,8 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -962,6 +1036,8 @@ export type ProductUpdateWithoutOrderItemsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -983,6 +1059,8 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1002,6 +1080,8 @@ export type ProductCreateManyCategoryInput = {
   imageUrl?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: $Enums.ProductUnit
+  stockQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: $Enums.StockStatus
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -1020,6 +1100,8 @@ export type ProductUpdateWithoutCategoryInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1040,6 +1122,8 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1060,6 +1144,8 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unit?: Prisma.EnumProductUnitFieldUpdateOperationsInput | $Enums.ProductUnit
+  stockQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lowStockThreshold?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockStatus?: Prisma.EnumStockStatusFieldUpdateOperationsInput | $Enums.StockStatus
   isOrganic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFreeRange?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1119,6 +1205,8 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   imageUrl?: boolean
   price?: boolean
   unit?: boolean
+  stockQuantity?: boolean
+  lowStockThreshold?: boolean
   stockStatus?: boolean
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -1142,6 +1230,8 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   imageUrl?: boolean
   price?: boolean
   unit?: boolean
+  stockQuantity?: boolean
+  lowStockThreshold?: boolean
   stockStatus?: boolean
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -1162,6 +1252,8 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   imageUrl?: boolean
   price?: boolean
   unit?: boolean
+  stockQuantity?: boolean
+  lowStockThreshold?: boolean
   stockStatus?: boolean
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -1182,6 +1274,8 @@ export type ProductSelectScalar = {
   imageUrl?: boolean
   price?: boolean
   unit?: boolean
+  stockQuantity?: boolean
+  lowStockThreshold?: boolean
   stockStatus?: boolean
   isOrganic?: boolean
   isFreeRange?: boolean
@@ -1192,7 +1286,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "name" | "slug" | "description" | "imageUrl" | "price" | "unit" | "stockStatus" | "isOrganic" | "isFreeRange" | "isFeatured" | "featuredSortOrder" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "name" | "slug" | "description" | "imageUrl" | "price" | "unit" | "stockQuantity" | "lowStockThreshold" | "stockStatus" | "isOrganic" | "isFreeRange" | "isFeatured" | "featuredSortOrder" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.ProductCategoryDefaultArgs<ExtArgs>
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
@@ -1222,6 +1316,8 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     imageUrl: string | null
     price: runtime.Decimal
     unit: $Enums.ProductUnit
+    stockQuantity: runtime.Decimal
+    lowStockThreshold: runtime.Decimal
     stockStatus: $Enums.StockStatus
     isOrganic: boolean
     isFreeRange: boolean
@@ -1664,6 +1760,8 @@ export interface ProductFieldRefs {
   readonly imageUrl: Prisma.FieldRef<"Product", 'String'>
   readonly price: Prisma.FieldRef<"Product", 'Decimal'>
   readonly unit: Prisma.FieldRef<"Product", 'ProductUnit'>
+  readonly stockQuantity: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly lowStockThreshold: Prisma.FieldRef<"Product", 'Decimal'>
   readonly stockStatus: Prisma.FieldRef<"Product", 'StockStatus'>
   readonly isOrganic: Prisma.FieldRef<"Product", 'Boolean'>
   readonly isFreeRange: Prisma.FieldRef<"Product", 'Boolean'>

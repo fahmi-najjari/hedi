@@ -45,3 +45,20 @@ export const OrderStatus = {
 } as const
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
+
+
+export const ExpenseCategory = {
+  SALARY: 'SALARY',
+  RENT: 'RENT',
+  FEED: 'FEED',
+  VETERINARY: 'VETERINARY',
+  UTILITIES: 'UTILITIES',
+  TRANSPORT: 'TRANSPORT',
+  MAINTENANCE: 'MAINTENANCE',
+  PACKAGING: 'PACKAGING',
+  EQUIPMENT: 'EQUIPMENT',
+  TAX: 'TAX',
+  OTHER: 'OTHER'
+} as const
+
+export type ExpenseCategory = (typeof ExpenseCategory)[keyof typeof ExpenseCategory]

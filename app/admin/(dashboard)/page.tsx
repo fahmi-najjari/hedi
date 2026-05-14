@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { formatMoney } from "@/app/admin/(dashboard)/format";
+import { Prisma } from "@/generated/prisma/client";
+import { getFinanceSummary } from "@/lib/finance";
 import { getPrisma } from "@/lib/prisma";
 
 export default async function AdminDashboardPage() {
-  const [productCount, categoryCount, orderCount, latestOrders] =
+  const [productCount, categoryCount, orderCount, latestOrders, finance, inventoryAlerts] =
     await Promise.all([
       getPrisma().product.count(),
       getPrisma().productCategory.count(),
@@ -13,7 +15,19 @@ export default async function AdminDashboardPage() {
         orderBy: { createdAt: "desc" },
         take: 5,
       }),
+      getFinanceSummary(),
+      getPrisma().$queryRaw<{ count: bigint }[]>(
+        Prisma.sql`
+          SELECT COUNT(*)::bigint AS count
+          FROM "Product"
+          WHERE
+            ("isActive" = true AND "stockQuantity" <= 0)
+            OR "stockStatus" = 'OUT_OF_STOCK'
+            OR ("lowStockThreshold" > 0 AND "stockQuantity" <= "lowStockThreshold")
+        `,
+      ),
     ]);
+  const inventoryAlertCount = Number(inventoryAlerts[0]?.count ?? 0);
 
   return (
     <div className="grid gap-4">
@@ -32,6 +46,41 @@ export default async function AdminDashboardPage() {
           href="/admin/categories"
         />
         <SummaryCard label="Commandes" value={orderCount} href="/admin/orders" />
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-4">
+        <MetricCard label="Revenus du mois" value={formatMoney(finance.revenueTotal)} />
+        <MetricCard label="Depenses du mois" value={formatMoney(finance.expenseTotal)} />
+        <MetricCard
+          label="Resultat net"
+          value={`${finance.isPositive ? "+" : ""}${formatMoney(finance.netTotal)}`}
+          tone={finance.isPositive ? "positive" : "negative"}
+        />
+        <MetricCard
+          label="Nouvelles commandes"
+          value={String(finance.newOrders)}
+        />
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-2">
+        <Link
+          href="/admin/inventory"
+          className={`rounded-lg border p-4 transition ${
+            inventoryAlertCount > 0
+              ? "border-amber-200 bg-amber-50 hover:bg-amber-100"
+              : "border-zinc-200 bg-white hover:bg-zinc-50"
+          }`}
+        >
+          <p className="text-xs font-medium text-zinc-600">
+            Alertes inventaire
+          </p>
+          <p className={`mt-2 text-2xl font-semibold ${inventoryAlertCount > 0 ? "text-amber-700" : "text-zinc-950"}`}>
+            {inventoryAlertCount}
+          </p>
+          <p className="mt-1 text-xs text-zinc-600">
+            Rupture, visible sans stock ou stock critique.
+          </p>
+        </Link>
       </div>
 
       <section className="rounded-lg border border-zinc-200 bg-white p-4">
@@ -71,6 +120,33 @@ export default async function AdminDashboardPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+function MetricCard({
+  label,
+  value,
+  tone = "default",
+}: {
+  label: string;
+  value: string;
+  tone?: "default" | "positive" | "negative";
+}) {
+  const valueClass =
+    tone === "positive"
+      ? "text-emerald-700"
+      : tone === "negative"
+        ? "text-red-700"
+        : "text-zinc-950";
+
+  return (
+    <Link
+      href="/admin/finance"
+      className="rounded-lg border border-zinc-200 bg-white p-4 transition hover:border-zinc-300 hover:bg-zinc-50"
+    >
+      <p className="text-xs font-medium text-zinc-500">{label}</p>
+      <p className={`mt-2 text-xl font-semibold ${valueClass}`}>{value}</p>
+    </Link>
   );
 }
 

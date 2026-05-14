@@ -60,7 +60,9 @@ export const ModelName = {
   ProductTranslation: 'ProductTranslation',
   HomeContent: 'HomeContent',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  Employee: 'Employee',
+  Expense: 'Expense'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -152,6 +154,8 @@ export const ProductScalarFieldEnum = {
   imageUrl: 'imageUrl',
   price: 'price',
   unit: 'unit',
+  stockQuantity: 'stockQuantity',
+  lowStockThreshold: 'lowStockThreshold',
   stockStatus: 'stockStatus',
   isOrganic: 'isOrganic',
   isFreeRange: 'isFreeRange',
@@ -229,6 +233,39 @@ export const OrderItemScalarFieldEnum = {
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const EmployeeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  phone: 'phone',
+  role: 'role',
+  salary: 'salary',
+  startDate: 'startDate',
+  notes: 'notes',
+  isActive: 'isActive',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const ExpenseScalarFieldEnum = {
+  id: 'id',
+  category: 'category',
+  employeeId: 'employeeId',
+  title: 'title',
+  amount: 'amount',
+  expenseDate: 'expenseDate',
+  notes: 'notes',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
 
 
 export const SortOrder = {

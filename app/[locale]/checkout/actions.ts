@@ -1,7 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { PaymentMethod } from "@/generated/prisma/enums";
+import { PaymentMethod, StockStatus } from "@/generated/prisma/enums";
 import { getPrisma } from "@/lib/prisma";
 
 function getString(formData: FormData, key: string) {
@@ -47,7 +48,8 @@ export async function createOrder(formData: FormData) {
     redirect(`/${locale}/cart?error=cart`);
   }
 
-  const products = await getPrisma().product.findMany({
+  const prisma = getPrisma();
+  const products = await prisma.product.findMany({
     where: {
       id: { in: normalizedItems.map((item) => item.productId) },
       isActive: true,
@@ -65,6 +67,11 @@ export async function createOrder(formData: FormData) {
 
       const unitPrice = Number(product.price);
       const lineTotal = unitPrice * item.quantity;
+      const stockQuantity = Number(product.stockQuantity);
+
+      if (stockQuantity < item.quantity) {
+        redirect(`/${locale}/cart?error=stock`);
+      }
 
       return {
         productId: product.id,
@@ -86,20 +93,56 @@ export async function createOrder(formData: FormData) {
     0,
   );
 
-  const order = await getPrisma().order.create({
-    data: {
-      customerName,
-      customerPhone,
-      customerEmail,
-      address,
-      notes,
-      paymentMethod,
-      subtotal: subtotal.toFixed(2),
-      items: {
-        create: orderItems,
+  const order = await prisma.$transaction(async (tx) => {
+    for (const item of orderItems) {
+      const product = await tx.product.findUnique({
+        where: { id: item.productId },
+      });
+
+      if (!product || !product.isActive) {
+        redirect(`/${locale}/cart?error=cart`);
+      }
+
+      const currentStock = Number(product.stockQuantity);
+
+      if (currentStock < item.quantity) {
+        redirect(`/${locale}/cart?error=stock`);
+      }
+
+      const nextStock = currentStock - item.quantity;
+      const lowStockThreshold = Number(product.lowStockThreshold);
+
+      await tx.product.update({
+        where: { id: item.productId },
+        data: {
+          stockQuantity: nextStock.toFixed(2),
+          stockStatus:
+            nextStock <= 0
+              ? StockStatus.OUT_OF_STOCK
+              : lowStockThreshold > 0 && nextStock <= lowStockThreshold
+                ? StockStatus.LIMITED
+                : StockStatus.AVAILABLE,
+        },
+      });
+    }
+
+    return tx.order.create({
+      data: {
+        customerName,
+        customerPhone,
+        customerEmail,
+        address,
+        notes,
+        paymentMethod,
+        subtotal: subtotal.toFixed(2),
+        items: {
+          create: orderItems,
+        },
       },
-    },
+    });
   });
 
+  revalidatePath("/[locale]/shop", "page");
+  revalidatePath("/[locale]", "page");
   redirect(`/${locale}/cart?ordered=${order.id}`);
 }

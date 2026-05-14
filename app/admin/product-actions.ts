@@ -204,6 +204,11 @@ function getString(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
 }
 
+function getNumber(formData: FormData, key: string, fallback = 0) {
+  const value = Number(getString(formData, key));
+  return Number.isFinite(value) ? value : fallback;
+}
+
 function getEnumValue<T extends Record<string, string>>(
   enumObject: T,
   value: string,
@@ -328,6 +333,8 @@ export async function createProduct(formData: FormData) {
   const descriptionFr = getString(formData, "descriptionFr");
   const descriptionAr = getString(formData, "descriptionAr");
   const price = getString(formData, "price");
+  const stockQuantity = getNumber(formData, "stockQuantity");
+  const lowStockThreshold = getNumber(formData, "lowStockThreshold");
   const imageUrl = getString(formData, "imageUrl") || null;
   const unit = getEnumValue(ProductUnit, getString(formData, "unit"), ProductUnit.PIECE);
   const stockStatus = getEnumValue(
@@ -336,7 +343,15 @@ export async function createProduct(formData: FormData) {
     StockStatus.AVAILABLE,
   );
 
-  if (!categoryId || !nameFr || !descriptionFr || !price || Number(price) <= 0) {
+  if (
+    !categoryId ||
+    !nameFr ||
+    !descriptionFr ||
+    !price ||
+    Number(price) <= 0 ||
+    stockQuantity < 0 ||
+    lowStockThreshold < 0
+  ) {
     redirect("/admin/products?error=product");
   }
 
@@ -348,6 +363,8 @@ export async function createProduct(formData: FormData) {
       description: descriptionFr,
       imageUrl,
       price,
+      stockQuantity,
+      lowStockThreshold,
       unit,
       stockStatus,
       isOrganic: formData.get("isOrganic") === "on",
@@ -413,6 +430,8 @@ export async function updateProduct(formData: FormData) {
   const descriptionFr = getString(formData, "descriptionFr");
   const descriptionAr = getString(formData, "descriptionAr");
   const price = getString(formData, "price");
+  const stockQuantity = getNumber(formData, "stockQuantity");
+  const lowStockThreshold = getNumber(formData, "lowStockThreshold");
   const imageUrl = getString(formData, "imageUrl") || null;
   const unit = getEnumValue(ProductUnit, getString(formData, "unit"), ProductUnit.PIECE);
   const stockStatus = getEnumValue(
@@ -421,7 +440,16 @@ export async function updateProduct(formData: FormData) {
     StockStatus.AVAILABLE,
   );
 
-  if (!id || !categoryId || !nameFr || !descriptionFr || !price || Number(price) <= 0) {
+  if (
+    !id ||
+    !categoryId ||
+    !nameFr ||
+    !descriptionFr ||
+    !price ||
+    Number(price) <= 0 ||
+    stockQuantity < 0 ||
+    lowStockThreshold < 0
+  ) {
     redirect("/admin/products?error=product");
   }
 
@@ -435,6 +463,8 @@ export async function updateProduct(formData: FormData) {
       description: descriptionFr,
       imageUrl,
       price,
+      stockQuantity,
+      lowStockThreshold,
       unit,
       stockStatus,
       isOrganic: formData.get("isOrganic") === "on",

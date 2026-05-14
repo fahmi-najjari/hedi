@@ -13,10 +13,10 @@ export default function AdminSettingsPage() {
           Prochaines sections
         </h2>
         <div className="mt-3 grid gap-2 text-sm text-zinc-600">
-          <p>Employes</p>
-          <p>Loyer</p>
-          <p>Factures</p>
-          <p>Couts</p>
+          <p>Employes: disponible dans /admin/employees</p>
+          <p>Loyer: disponible comme categorie de depense</p>
+          <p>Factures: disponible comme depenses eau / electricite</p>
+          <p>Couts: disponible dans /admin/expenses</p>
           <p>Rapports</p>
         </div>
       </section>

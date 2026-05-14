@@ -113,6 +113,14 @@ export default async function AdminProductsPage({ searchParams }: Props) {
               ))}
             </select>
           </label>
+          <label className="block">
+            <span className="text-xs font-medium text-zinc-800">Quantite</span>
+            <input name="stockQuantity" type="number" min="0" step="0.01" defaultValue="0" className="mt-1 h-9 w-full rounded-md border border-zinc-300 px-3 text-sm outline-none transition focus:border-zinc-950" />
+          </label>
+          <label className="block">
+            <span className="text-xs font-medium text-zinc-800">Alerte basse</span>
+            <input name="lowStockThreshold" type="number" min="0" step="0.01" defaultValue="0" className="mt-1 h-9 w-full rounded-md border border-zinc-300 px-3 text-sm outline-none transition focus:border-zinc-950" />
+          </label>
           <label className="block md:col-span-2">
             <span className="text-xs font-medium text-zinc-800">Image URL</span>
             <input name="imageUrl" type="url" className="mt-1 h-9 w-full rounded-md border border-zinc-300 px-3 text-sm outline-none transition focus:border-zinc-950" />
@@ -148,10 +156,11 @@ export default async function AdminProductsPage({ searchParams }: Props) {
 
             return (
               <details key={item.id} className="rounded-md border border-zinc-200 bg-zinc-50">
-                <summary className="grid cursor-pointer gap-2 px-3 py-2 text-xs text-zinc-700 md:grid-cols-[minmax(0,1fr)_150px_110px_100px] md:items-center">
+                <summary className="grid cursor-pointer gap-2 px-3 py-2 text-xs text-zinc-700 md:grid-cols-[minmax(0,1fr)_150px_110px_110px_100px] md:items-center">
                   <span className="truncate font-semibold text-zinc-950">{productFr.name}</span>
                   <span className="truncate">{categoryText.name}</span>
                   <span>{formatMoney(item.price)} / {item.unit}</span>
+                  <span>Stock {Number(item.stockQuantity).toFixed(2)}</span>
                   <span>{item.isActive ? "Visible" : "Masque"}</span>
                 </summary>
 
@@ -171,6 +180,8 @@ export default async function AdminProductsPage({ searchParams }: Props) {
                   <label className="block"><span className="text-xs font-medium text-zinc-800">Prix (TND)</span><input name="price" type="number" min="0.01" step="0.01" defaultValue={Number(item.price).toFixed(2)} required className="mt-1 h-8 w-full rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950" /></label>
                   <label className="block"><span className="text-xs font-medium text-zinc-800">Unite</span><select name="unit" defaultValue={item.unit} className="mt-1 h-8 w-full rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950">{Object.values(ProductUnit).map((unit) => (<option key={unit} value={unit}>{unit}</option>))}</select></label>
                   <label className="block"><span className="text-xs font-medium text-zinc-800">Stock</span><select name="stockStatus" defaultValue={item.stockStatus} className="mt-1 h-8 w-full rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950">{Object.values(StockStatus).map((status) => (<option key={status} value={status}>{status}</option>))}</select></label>
+                  <label className="block"><span className="text-xs font-medium text-zinc-800">Quantite</span><input name="stockQuantity" type="number" min="0" step="0.01" defaultValue={Number(item.stockQuantity).toFixed(2)} className="mt-1 h-8 w-full rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950" /></label>
+                  <label className="block"><span className="text-xs font-medium text-zinc-800">Alerte basse</span><input name="lowStockThreshold" type="number" min="0" step="0.01" defaultValue={Number(item.lowStockThreshold).toFixed(2)} className="mt-1 h-8 w-full rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950" /></label>
                   <label className="block md:col-span-2"><span className="text-xs font-medium text-zinc-800">Image URL</span><input name="imageUrl" type="url" defaultValue={item.imageUrl ?? ""} className="mt-1 h-8 w-full rounded-md border border-zinc-300 px-2 text-xs outline-none transition focus:border-zinc-950" /></label>
                   <label className="block md:col-span-2"><span className="text-xs font-medium text-zinc-800">Description FR</span><textarea name="descriptionFr" defaultValue={productFr.description} required rows={2} className="mt-1 w-full rounded-md border border-zinc-300 px-2 py-2 text-xs outline-none transition focus:border-zinc-950" /></label>
                   <label className="block md:col-span-2"><span className="text-xs font-medium text-zinc-800">Description AR</span><textarea name="descriptionAr" dir="rtl" defaultValue={productAr.description} rows={2} className="mt-1 w-full rounded-md border border-zinc-300 px-2 py-2 text-xs outline-none transition focus:border-zinc-950" /></label>

@@ -3,15 +3,20 @@
 import {
   Boxes,
   ClipboardList,
+  CreditCard,
+  DollarSign,
   Home,
+  ListChecks,
   LayoutDashboard,
   LogOut,
   Menu,
+  Users,
   Settings,
   Tags,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { signOutAdmin } from "@/app/admin/actions";
 
 const navItems = [
@@ -20,6 +25,10 @@ const navItems = [
   { href: "/admin/categories", label: "Categories", icon: Tags },
   { href: "/admin/home", label: "Accueil", icon: Home },
   { href: "/admin/orders", label: "Commandes", icon: ClipboardList },
+  { href: "/admin/inventory", label: "Inventaire", icon: ListChecks },
+  { href: "/admin/finance", label: "Finance", icon: DollarSign },
+  { href: "/admin/expenses", label: "Depenses", icon: CreditCard },
+  { href: "/admin/employees", label: "Employes", icon: Users },
   { href: "/admin/settings", label: "Parametres", icon: Settings },
 ] as const;
 
@@ -27,7 +36,13 @@ function isActive(pathname: string, href: string) {
   return href === "/admin" ? pathname === href : pathname.startsWith(href);
 }
 
-function AdminNav({ onMobile }: { onMobile?: boolean }) {
+function AdminNav({
+  onMobile,
+  onNavigate,
+}: {
+  onMobile?: boolean;
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
 
   return (
@@ -40,6 +55,7 @@ function AdminNav({ onMobile }: { onMobile?: boolean }) {
           <Link
             key={item.href}
             href={item.href}
+            onClick={onNavigate}
             className={`flex h-9 items-center gap-2 rounded-md px-3 text-sm transition ${
               active
                 ? "bg-zinc-950 font-medium text-white"
@@ -64,6 +80,8 @@ export function AdminShell({
   adminEmail: string;
   children: React.ReactNode;
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <main className="min-h-screen bg-zinc-50 text-zinc-950">
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-zinc-200 bg-white md:flex md:flex-col">
@@ -87,15 +105,29 @@ export function AdminShell({
       <div className="md:pl-64">
         <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/95 backdrop-blur">
           <div className="flex min-h-14 items-center justify-between gap-3 px-4 md:px-6">
-            <details className="relative md:hidden">
-              <summary className="flex h-9 cursor-pointer list-none items-center gap-2 rounded-md border border-zinc-300 bg-white px-3 text-sm font-medium text-zinc-800">
+            <div className="relative md:hidden">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className="flex h-9 items-center gap-2 rounded-md border border-zinc-300 bg-white px-3 text-sm font-medium text-zinc-800"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="admin-mobile-menu"
+              >
                 <Menu className="h-4 w-4" aria-hidden="true" />
                 Menu
-              </summary>
-              <div className="absolute left-0 top-11 z-50 w-64 rounded-lg border border-zinc-200 bg-white p-2 shadow-lg">
-                <AdminNav onMobile />
-              </div>
-            </details>
+              </button>
+              {mobileMenuOpen ? (
+                <div
+                  id="admin-mobile-menu"
+                  className="absolute left-0 top-11 z-50 w-64 rounded-lg border border-zinc-200 bg-white p-2 shadow-lg"
+                >
+                  <AdminNav
+                    onMobile
+                    onNavigate={() => setMobileMenuOpen(false)}
+                  />
+                </div>
+              ) : null}
+            </div>
 
             <div className="hidden md:block">
               <p className="text-xs font-medium text-zinc-500">

@@ -144,5 +144,5 @@ export async function createOrder(formData: FormData) {
 
   revalidatePath("/[locale]/shop", "page");
   revalidatePath("/[locale]", "page");
-  redirect(`/${locale}/cart?ordered=${order.id}`);
+  redirect(`/${locale}/order/${order.id}`);
 }
